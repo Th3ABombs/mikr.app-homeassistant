@@ -1,0 +1,66 @@
+name: "MikroTik Manager (mikr.app)"
+version: "2.8.0"
+slug: "mikr"
+description: "Gestione centralizzata di router MikroTik RouterOS 7: monitoraggio, backup, upgrade, comandi, syslog"
+url: "https://github.com/Th3ABombs/mikr.app-homeassistant/tree/main/mikr"
+startup: application
+boot: auto
+init: false
+panel_icon: mdi:router-network
+
+arch:
+  - amd64
+  - aarch64
+
+# /data è persistente e incluso nei backup di Home Assistant:
+# run.sh lo collega a /app/data (DB SQLite, segreti, backup .rsc).
+# /ssl serve solo se si abilita HTTPS con i certificati di HA.
+map:
+  - type: ssl
+    read_only: true
+
+ports:
+  3000/tcp: 3000
+  3443/tcp: null
+  5514/udp: 5514
+  5514/tcp: null
+ports_description:
+  3000/tcp: "Interfaccia web (HTTP)"
+  3443/tcp: "Interfaccia web (HTTPS, solo con ssl: true)"
+  5514/udp: "Ricevitore syslog dai router (UDP)"
+  5514/tcp: "Ricevitore syslog dai router (TCP)"
+
+webui: "http://[HOST]:[PORT:3000]/"
+watchdog: "tcp://[HOST]:[PORT:3000]"
+
+options:
+  log_level: "info"
+  initial_admin_password: ""
+  ssl: false
+  certfile: "fullchain.pem"
+  keyfile: "privkey.pem"
+  monitor_interval_seconds: 60
+  syslog_enabled: true
+  cve_enabled: true
+  nvd_api_key: ""
+  metrics_enabled: false
+  metrics_token: ""
+  mcp_enabled: false
+  env_vars: []
+
+schema:
+  log_level: list(trace|debug|info|warn|error)
+  initial_admin_password: password?
+  ssl: bool
+  certfile: str
+  keyfile: str
+  monitor_interval_seconds: int(10,3600)
+  syslog_enabled: bool
+  cve_enabled: bool
+  nvd_api_key: password?
+  metrics_enabled: bool
+  metrics_token: password?
+  mcp_enabled: bool
+  env_vars:
+    - name: match(^[A-Z][A-Z0-9_]*$)
+      value: str

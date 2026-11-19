@@ -1,0 +1,45 @@
+configuration:
+  log_level:
+    name: Livello di log
+    description: Dettaglio dei log del server mikr.
+  initial_admin_password:
+    name: Password admin iniziale
+    description: Password dell'utente "admin", usata solo al primissimo avvio. Se vuota si usa admin/admin (verrà chiesto di cambiarla).
+  ssl:
+    name: HTTPS
+    description: Pubblica l'interfaccia anche in HTTPS sulla porta 3443 con i certificati in /ssl.
+  certfile:
+    name: File certificato
+    description: Nome del file del certificato dentro /ssl.
+  keyfile:
+    name: File chiave privata
+    description: Nome del file della chiave privata dentro /ssl.
+  monitor_interval_seconds:
+    name: Intervallo di monitoraggio (secondi)
+    description: Ogni quanto vengono interrogati i dispositivi.
+  syslog_enabled:
+    name: Ricevitore syslog
+    description: Riceve i log dei router sulla porta 5514 (UDP/TCP).
+  cve_enabled:
+    name: Controllo CVE
+    description: Scarica il feed NVD e confronta le versioni RouterOS con le CVE note.
+  nvd_api_key:
+    name: Chiave API NVD
+    description: Facoltativa, alza i limiti di richieste verso NVD.
+  metrics_enabled:
+    name: Metriche Prometheus
+    description: Espone /metrics per Prometheus.
+  metrics_token:
+    name: Token metriche
+    description: Token Bearer richiesto per leggere /metrics.
+  mcp_enabled:
+    name: Server MCP
+    description: Attiva l'endpoint MCP di mikr per gli assistenti AI.
+  env_vars:
+    name: Variabili d'ambiente aggiuntive
+    description: Qualsiasi altra impostazione di mikr (vedi mikr.app/docs/installation.html). Hanno la precedenza sulle opzioni sopra.
+network:
+  3000/tcp: Interfaccia web (HTTP)
+  3443/tcp: Interfaccia web (HTTPS, solo con HTTPS attivo)
+  5514/udp: Ricevitore syslog (UDP)
+  5514/tcp: Ricevitore syslog (TCP)
