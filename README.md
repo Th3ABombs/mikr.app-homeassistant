@@ -1,3 +1,5 @@
+<p align="center"><img src="mikr/logo.png" alt="mikr for Home Assistant" width="400"></p>
+
 # mikr.app per Home Assistant
 
 App (add-on) di Home Assistant che esegue [mikr.app](https://mikr.app),
